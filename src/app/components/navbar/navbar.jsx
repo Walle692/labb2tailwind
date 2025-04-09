@@ -33,7 +33,10 @@ export default function MyNavbar() {
                 <div className="hidden md:block">
                   <div className="ml-10 flex items-baseline space-x-4">
                     {navigation.map((item) => (
-                        <Link key={item.name} href={item.href} className="text-white hover:bg-emerald-700 px-3 py-2 rounded-md text-sm font-medium">
+                        <Link key={item.name} href={item.href} className={classNames(
+                            item.current ? 'bg-emerald-900 text-white' : 'text-gray-300 hover:bg-emerald-700 hover:text-white',
+                            'block rounded-md px-3 py-2 text-base font-medium',
+                          )}>
                             {item.name}
                         </Link>
                     ))}
@@ -66,7 +69,12 @@ export default function MyNavbar() {
                     'block rounded-md px-3 py-2 text-base font-medium',
                   )}
                 >
-                  {item.name}
+                  <Link key={item.name} href={item.href} className={classNames(
+                        item.current ? 'bg-emerald-900 text-white' : 'text-gray-300 hover:bg-emerald-700 hover:text-white',
+                        'block rounded-md px-3 py-2 text-base font-medium',
+                        )}>
+                            {item.name}
+                    </Link>
                 </DisclosureButton>
               ))}
             </div>
