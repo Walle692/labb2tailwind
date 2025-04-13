@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Card from './Card';
 import Papa from 'papaparse';
-import SearchBox from './searchbox/searchbox';
+import SearchBox from './searchbox';
 
 const InfiniteScroll = () => {
     const [data, setData] = useState([]);
