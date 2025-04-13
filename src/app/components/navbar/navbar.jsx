@@ -5,10 +5,9 @@ import Link from 'next/link'
 
 
 const navigation = [
-  { name: 'Home', href: '/', current: true },
+  { name: 'Listings', href: '/listings', current: false },
   { name: 'About', href: '/about', current: false },
   { name: 'Contact', href: '/contact', current: false },
-  { name: 'Listings', href: '/listings', current: false },
 ]
 
 
@@ -25,11 +24,13 @@ export default function MyNavbar() {
             <div className="flex h-16 items-center justify-between">
               <div className="flex items-center">
                 <div className="shrink-0">
-                  <img
-                    alt="House Index"
-                    src="/houseIcon.svg"
-                    className="size-12"
-                  />
+                  <Link href="/">
+                    <img
+                      alt="House Index"
+                      src="/houseIcon.svg"
+                      className="size-12"
+                    />
+                  </Link>
                 </div>
                 <div className="hidden md:block">
                   <div className="ml-10 flex items-baseline space-x-4">
