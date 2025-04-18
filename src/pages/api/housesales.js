@@ -10,7 +10,7 @@ export default async function handler(req, res) {
         });
 
         // Query the database for house sales data
-        const rows = await db.all('SELECT * FROM HouseSales');
+        const rows = await db.all('SELECT * FROM HouseSalesSeattle');
 
         // Close the database connection
         await db.close();
