@@ -15,6 +15,12 @@ const InfiniteScroll = () => {
             try {
                 const response = await fetch('/api/housesales'); // API endpoint
                 const result = await response.json();
+
+                // Ensure result is an array
+                if (!Array.isArray(result)) {
+                    throw new Error('API response is not an array');
+                }
+
                 const parsedData = result.map((item) => ({
                     ...item,
                     Image: `/256x256/${item.id}.jpg`, // Construct the image path
