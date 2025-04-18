@@ -5,12 +5,15 @@ export default async function handler(req, res) {
     try {
         // Open the SQLite database
         const db = await open({
-            filename: './HouseSalesSeattle.db', // Correct database file path
+            filename: '/Users/walter/downloads/HouseSalesSeattle.db', // Update to the correct path on your local server
             driver: sqlite3.Database,
         });
 
         // Query the database for house sales data
         const rows = await db.all('SELECT * FROM HouseSalesSeattle'); // Ensure table name is correct
+
+        // Log the query result
+        console.log('Database query result:', rows);
 
         // Close the database connection
         await db.close();

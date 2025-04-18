@@ -15,6 +15,7 @@ const InfiniteScroll = () => {
             try {
                 const response = await fetch('/api/housesales'); // API endpoint
                 const result = await response.json();
+                console.log('API response:', result); // Log the API response
 
                 // Ensure result is an array
                 if (!Array.isArray(result)) {
