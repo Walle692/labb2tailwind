@@ -14,8 +14,8 @@ const InfiniteScroll = () => {
             const queryParams = new URLSearchParams({
                 salesID: page,
                 price: filters.price,
-                zipcode: filters.zipcode,
-                sqfoot: filters.sqfoot,
+                zip_code: filters.zipcode, // Use zip_code for database column
+                SqFtTotLiving: filters.sqfoot, // Use SqFtTotLiving for database column
                 sortBy: filters.sortBy, // Include sortBy in the query
             });
             const response = await fetch(`/api/housesales?${queryParams}`);

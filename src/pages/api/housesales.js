@@ -20,11 +20,11 @@ export default async function handler(req, res) {
             params.push(salesID);
         }
         if (price) {
-            query += ' AND SalePrice <= ?';
+            query += ' AND SalePrice <= ?'; // Use SalePrice for price
             params.push(price);
         }
         if (zipcode) {
-            query += ' AND ZipCode = ?';
+            query += ' AND zip_code = ?'; // Use zip_code for zipcode
             params.push(zipcode);
         }
         if (sqfoot) {

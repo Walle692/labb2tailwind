@@ -41,7 +41,7 @@ const SearchBox = ({ onSearch }) => {
                 <option value="">Sort By</option>
                 <option value="SalePrice">Price</option>
                 <option value="SqFtTotLiving">Square Footage</option>
-                <option value="ZipCode">Zip Code</option>
+                <option value="zip_code">Zip Code</option>
             </select>
             <button onClick={handleSearch} className="p-2 bg-blue-500 text-white">
                 Search
