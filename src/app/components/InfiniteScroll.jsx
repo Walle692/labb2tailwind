@@ -5,89 +5,53 @@ import SearchBox from './searchbox';
 
 const InfiniteScroll = () => {
     const [data, setData] = useState([]);
-    const [filteredData, setFilteredData] = useState([]);
-    const [visibleData, setVisibleData] = useState([]);
     const [page, setPage] = useState(1);
-    const itemsPerPage = 10;
+    const [filters, setFilters] = useState({ price: '', zipcode: '', sqfoot: '' });
+    const itemsPerPage = 1; // Fetch one item at a time
+
+    const fetchData = async (page, filters) => {
+        try {
+            const queryParams = new URLSearchParams({
+                salesID: page,
+                price: filters.price,
+                zipcode: filters.zipcode,
+                sqfoot: filters.sqfoot,
+            });
+            const response = await fetch(`/api/housesales?${queryParams}`);
+            const result = await response.json();
+            console.log('API response:', result);
+
+            if (result.length > 0) {
+                setData((prevData) => [...prevData, ...result]);
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch('/api/housesales'); // API endpoint
-                const result = await response.json();
-                console.log('API response:', result); // Log the API response
-
-                // Ensure result is an array
-                if (!Array.isArray(result)) {
-                    throw new Error('API response is not an array');
-                }
-
-                const parsedData = result.map((item) => ({
-                    ...item,
-                    Image: `/256x256/${item.id}.jpg`, // Construct the image path
-                }));
-                setData(parsedData);
-                setFilteredData(parsedData);
-                setVisibleData(parsedData.slice(0, itemsPerPage));
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
-
-        fetchData();
-    }, []);
+        fetchData(page, filters);
+    }, [page, filters]);
 
     const loadMore = () => {
-        const nextPage = page + 1;
-        const nextVisibleData = filteredData.slice(0, nextPage * itemsPerPage);
-        setVisibleData(nextVisibleData);
-        setPage(nextPage);
+        setPage((prevPage) => prevPage + 1);
     };
 
-    const handleSearch = (searchTerm) => {
-        const lowerCaseTerm = searchTerm.toLowerCase();
-        const filtered = data.filter((item) =>
-            Object.values(item).some((value) =>
-                String(value).toLowerCase().includes(lowerCaseTerm)
-            )
-        );
-        setFilteredData(filtered);
-        setVisibleData(filtered.slice(0, itemsPerPage));
-        setPage(1);
+    const handleSearch = (searchFilters) => {
+        setFilters(searchFilters);
+        setData([]); // Reset data for new search
+        setPage(1); // Reset pagination
     };
-
-    const handleSort = (sortField) => {
-        const sorted = [...filteredData].sort((a, b) => {
-            if (!sortField) return 0;
-            if (sortField === 'SalePrice' || sortField === 'SqFtTotLiving') {
-                return parseFloat(a[sortField]) - parseFloat(b[sortField]);
-            }
-            return String(a[sortField]).localeCompare(String(b[sortField]));
-        });
-        setFilteredData(sorted);
-        setVisibleData(sorted.slice(0, page * itemsPerPage));
-    };
-
-    useEffect(() => {
-        const handleScroll = () => {
-            if (
-                window.innerHeight + document.documentElement.scrollTop >=
-                document.documentElement.offsetHeight - 100
-            ) {
-                loadMore();
-            }
-        };
-
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, [page, filteredData]);
 
     return (
         <div className="p-4 space-y-4">
-            <SearchBox onSearch={handleSearch} onSort={handleSort} />
-            {visibleData.map((item, index) => (
+            <SearchBox onSearch={handleSearch} />
+            {data.map((item, index) => (
                 <Card key={index} data={item} />
             ))}
+            <button onClick={loadMore} className="mt-4 p-2 bg-blue-500 text-white">
+                Load More
+            </button>
         </div>
     );
 };

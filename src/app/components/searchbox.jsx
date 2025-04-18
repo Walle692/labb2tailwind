@@ -1,39 +1,40 @@
 import React, { useState } from 'react';
 
-const SearchBox = ({ onSearch, onSort }) => {
-    const [searchTerm, setSearchTerm] = useState('');
-    const [sortField, setSortField] = useState('');
+const SearchBox = ({ onSearch }) => {
+    const [price, setPrice] = useState('');
+    const [zipcode, setZipcode] = useState('');
+    const [sqfoot, setSqfoot] = useState('');
 
-    const handleSearch = (e) => {
-        setSearchTerm(e.target.value);
-        onSearch(e.target.value);
-    };
-
-    const handleSort = (e) => {
-        setSortField(e.target.value);
-        onSort(e.target.value);
+    const handleSearch = () => {
+        onSearch({ price, zipcode, sqfoot });
     };
 
     return (
-        <div className="mb-4 flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4">
+        <div className="flex space-x-4">
+            <input
+                type="number"
+                placeholder="Max Price"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+                className="p-2 border"
+            />
             <input
                 type="text"
-                placeholder="Search..."
-                value={searchTerm}
-                onChange={handleSearch}
-                className="border rounded px-4 py-2 w-full md:w-1/2"
+                placeholder="Zip Code"
+                value={zipcode}
+                onChange={(e) => setZipcode(e.target.value)}
+                className="p-2 border"
             />
-            <select
-                value={sortField}
-                onChange={handleSort}
-                className="border rounded px-4 py-2 w-full md:w-1/4"
-            >
-                <option value="">Sort By</option>
-                <option value="SalePrice">Price</option>
-                <option value="zip_code">Zip Code</option>
-                <option value="SqFtTotLiving">Square Footage</option>
-                {/* Add more options as needed */}
-            </select>
+            <input
+                type="number"
+                placeholder="Min SqFt"
+                value={sqfoot}
+                onChange={(e) => setSqfoot(e.target.value)}
+                className="p-2 border"
+            />
+            <button onClick={handleSearch} className="p-2 bg-blue-500 text-white">
+                Search
+            </button>
         </div>
     );
 };
