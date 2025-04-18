@@ -7,7 +7,7 @@ const InfiniteScroll = () => {
     const [data, setData] = useState([]);
     const [page, setPage] = useState(1);
     const [filters, setFilters] = useState({ price: '', zipcode: '', sqfoot: '', sortBy: '' });
-    const itemsPerPage = 1; // Fetch one item at a time
+    const itemsPerPage = 20; // Fetch one item at a time
 
     const fetchData = async (page, filters) => {
         try {
