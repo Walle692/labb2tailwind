@@ -1,10 +1,10 @@
 export default function Index() {
     return (
-        <div className="p-4">
-            <h1 className="text-2xl font-bold">About Page</h1>
-            <p className="mt-2 text-gray-600">
-                Welcome to the About Page! This is a Next.js page component.
-            </p>
+        <div className="flex justify-center p-4">
+            <div className="flex flex-row items-center justify-center background-gray-200 rounded-lg shadow-lg p-4">
+                <h1 className="text-7xl font-bold">HOUSE INDEX</h1>
+            </div>
         </div>
+
     );
 }
