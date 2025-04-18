@@ -4,7 +4,7 @@ const Card = ({ data }) => {
     return (
         <div className="flex flex-col md:flex-row border rounded-lg overflow-hidden shadow-md">
             <img
-                src={`/public/256x256/${data.Image}.jpg`}
+                src={`./public/256x256/${data.Image}.jpg`}
                 alt={`Price: $${data.SalePrice}`}
                 className="w-full md:w-1/3 object-cover"
             />
