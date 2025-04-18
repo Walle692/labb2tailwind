@@ -1,18 +1,13 @@
 import React from 'react';
 
 const Card = ({ data }) => {
-    const { Image, SalePrice, zip_code, SqFtTotLiving } = data;
-
     return (
-        <div className="flex flex-col md:flex-row border rounded-lg overflow-hidden shadow-md">
-            <img
-                src={Image}
-                alt={`Price: $${SalePrice}`}
-                className="w-full md:w-1/3 object-cover"
-            />
-            <div className="p-4 flex flex-col justify-center">
-                <h2 className="text-xl font-bold mb-2">Price: ${SalePrice}</h2>
-                <p className="text-gray-600">Zip Code: {zip_code}, SqFt: {SqFtTotLiving}</p>
+        <div className="card">
+            <img src={data.Image} alt={`House ${data.salesID}`} className="w-full h-auto" />
+            <div className="p-4">
+                <h2 className="text-lg font-bold">Price: ${data.SalePrice}</h2>
+                <p>Zip Code: {data.zip_code}</p>
+                <p>Square Footage: {data.SqFtTotLiving} sqft</p>
             </div>
         </div>
     );

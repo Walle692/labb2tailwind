@@ -23,7 +23,11 @@ const InfiniteScroll = () => {
             console.log('API response:', result);
 
             if (result.length > 0) {
-                setData((prevData) => [...prevData, ...result]);
+                const parsedData = result.map((item) => ({
+                    ...item,
+                    Image: `/256x256/${item.Image}.jpg`, // Construct image path
+                }));
+                setData((prevData) => [...prevData, ...parsedData]);
             }
         } catch (error) {
             console.error('Error fetching data:', error);
