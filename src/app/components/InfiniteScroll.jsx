@@ -5,29 +5,26 @@ import SearchBox from './searchbox';
 
 const InfiniteScroll = () => {
     const [data, setData] = useState([]);
-    const [page, setPage] = useState(1);
+    const [offset, setOffset] = useState(0); // Use offset for pagination
     const [filters, setFilters] = useState({ price: '', zipcode: '', sqfoot: '', sortBy: '' });
-    const itemsPerPage = 20; // Fetch one item at a time
+    const itemsPerPage = 20; // Number of items to fetch per page
 
-    const fetchData = async (page, filters) => {
+    const fetchData = async (offset, filters) => {
         try {
             const queryParams = new URLSearchParams({
-                salesID: page,
+                offset, // Use offset for pagination
+                limit: itemsPerPage, // Limit the number of items per request
                 price: filters.price,
-                zip_code: filters.zipcode, // Use zip_code for database column
-                SqFtTotLiving: filters.sqfoot, // Use SqFtTotLiving for database column
-                sortBy: filters.sortBy, // Include sortBy in the query
+                zip_code: filters.zipcode,
+                SqFtTotLiving: filters.sqfoot,
+                sortBy: filters.sortBy,
             });
             const response = await fetch(`/api/housesales?${queryParams}`);
             const result = await response.json();
             console.log('API response:', result);
 
             if (result.length > 0) {
-                const parsedData = result.map((item) => ({
-                    ...item,
-                    Image: `/256x256/${item.Image}.jpg`, // Construct image path
-                }));
-                setData((prevData) => [...prevData, ...parsedData]);
+                setData((prevData) => [...prevData, ...result]);
             }
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -35,17 +32,17 @@ const InfiniteScroll = () => {
     };
 
     useEffect(() => {
-        fetchData(page, filters);
-    }, [page, filters]);
+        fetchData(offset, filters);
+    }, [offset, filters]);
 
     const loadMore = () => {
-        setPage((prevPage) => prevPage + 1);
+        setOffset((prevOffset) => prevOffset + itemsPerPage); // Increment offset by itemsPerPage
     };
 
     const handleSearch = (searchFilters) => {
         setFilters(searchFilters);
         setData([]); // Reset data for new search
-        setPage(1); // Reset pagination
+        setOffset(0); // Reset offset for new search
     };
 
     return (
