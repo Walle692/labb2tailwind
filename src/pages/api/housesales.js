@@ -3,7 +3,7 @@ import { open } from 'sqlite';
 
 export default async function handler(req, res) {
     try {
-        const { salesID, price, zipcode, sqfoot } = req.query;
+        const { salesID, price, zipcode, sqfoot, sortBy } = req.query;
 
         // Open the SQLite database
         const db = await open({
@@ -30,6 +30,11 @@ export default async function handler(req, res) {
         if (sqfoot) {
             query += ' AND SqFtTotLiving >= ?';
             params.push(sqfoot);
+        }
+
+        // Add sorting
+        if (sortBy) {
+            query += ` ORDER BY ${sortBy} ASC`; // Sort in ascending order
         }
 
         // Execute the query

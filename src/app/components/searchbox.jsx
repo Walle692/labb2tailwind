@@ -4,9 +4,10 @@ const SearchBox = ({ onSearch }) => {
     const [price, setPrice] = useState('');
     const [zipcode, setZipcode] = useState('');
     const [sqfoot, setSqfoot] = useState('');
+    const [sortBy, setSortBy] = useState(''); // New state for sorting
 
     const handleSearch = () => {
-        onSearch({ price, zipcode, sqfoot });
+        onSearch({ price, zipcode, sqfoot, sortBy });
     };
 
     return (
@@ -32,6 +33,16 @@ const SearchBox = ({ onSearch }) => {
                 onChange={(e) => setSqfoot(e.target.value)}
                 className="p-2 border"
             />
+            <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+                className="p-2 border"
+            >
+                <option value="">Sort By</option>
+                <option value="SalePrice">Price</option>
+                <option value="SqFtTotLiving">Square Footage</option>
+                <option value="ZipCode">Zip Code</option>
+            </select>
             <button onClick={handleSearch} className="p-2 bg-blue-500 text-white">
                 Search
             </button>

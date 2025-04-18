@@ -6,7 +6,7 @@ import SearchBox from './searchbox';
 const InfiniteScroll = () => {
     const [data, setData] = useState([]);
     const [page, setPage] = useState(1);
-    const [filters, setFilters] = useState({ price: '', zipcode: '', sqfoot: '' });
+    const [filters, setFilters] = useState({ price: '', zipcode: '', sqfoot: '', sortBy: '' });
     const itemsPerPage = 1; // Fetch one item at a time
 
     const fetchData = async (page, filters) => {
@@ -16,6 +16,7 @@ const InfiniteScroll = () => {
                 price: filters.price,
                 zipcode: filters.zipcode,
                 sqfoot: filters.sqfoot,
+                sortBy: filters.sortBy, // Include sortBy in the query
             });
             const response = await fetch(`/api/housesales?${queryParams}`);
             const result = await response.json();
