@@ -1,7 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import Card from './Card';
-import Papa from 'papaparse';
 import SearchBox from './searchbox';
 
 const InfiniteScroll = () => {
@@ -12,22 +11,23 @@ const InfiniteScroll = () => {
     const itemsPerPage = 10;
 
     useEffect(() => {
-        Papa.parse('/HouseSalesSeattle.csv', {
-            download: true,
-            header: true,
-            complete: (result) => {
-                const parsedData = result.data.map((item) => {
-                    const lastField = Object.values(item).pop(); // Get the last field value
-                    return {
-                        ...item,
-                        Image: `/256x256/${lastField}.jpg`, // Construct the image path
-                    };
-                });
+        const fetchData = async () => {
+            try {
+                const response = await fetch('/api/housesales'); // API endpoint
+                const result = await response.json();
+                const parsedData = result.map((item) => ({
+                    ...item,
+                    Image: `/256x256/${item.id}.jpg`, // Construct the image path
+                }));
                 setData(parsedData);
                 setFilteredData(parsedData);
                 setVisibleData(parsedData.slice(0, itemsPerPage));
-            },
-        });
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        fetchData();
     }, []);
 
     const loadMore = () => {
