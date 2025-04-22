@@ -58,13 +58,28 @@ const HousePage = ({ params }) => {
         if (houseData) {
             const loadGoogleMaps = async () => {
                 try {
-                    // Dynamically load the Google Maps API
-                    const script = document.createElement('script');
-                    script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyA5FMhi5ZeDPpQ3ckKqhgt3YyZv8zCJRBg`;
-                    script.async = true;
-                    script.defer = true;
-                    script.onload = () => {
-                        // Initialize the map after the script is loaded
+                    // Check if the script is already loaded
+                    if (!document.querySelector('script[src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5FMhi5ZeDPpQ3ckKqhgt3YyZv8zCJRBg"]')) {
+                        const script = document.createElement('script');
+                        script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyA5FMhi5ZeDPpQ3ckKqhgt3YyZv8zCJRBg`;
+                        script.async = true;
+                        script.defer = true;
+                        script.onload = () => {
+                            // Initialize the map after the script is loaded
+                            const position = { lat: houseData.latitude, lng: houseData.longitude }; // Replace with actual coordinates
+                            const map = new google.maps.Map(document.getElementById('map'), {
+                                zoom: 12,
+                                center: position,
+                            });
+                            new google.maps.Marker({
+                                position,
+                                map,
+                                title: 'House Location',
+                            });
+                        };
+                        document.body.appendChild(script);
+                    } else {
+                        // If the script is already loaded, initialize the map directly
                         const position = { lat: houseData.latitude, lng: houseData.longitude }; // Replace with actual coordinates
                         const map = new google.maps.Map(document.getElementById('map'), {
                             zoom: 12,
@@ -75,8 +90,7 @@ const HousePage = ({ params }) => {
                             map,
                             title: 'House Location',
                         });
-                    };
-                    document.body.appendChild(script);
+                    }
                 } catch (error) {
                     console.error('Error loading Google Maps:', error);
                 }
