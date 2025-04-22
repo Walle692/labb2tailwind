@@ -7,7 +7,7 @@ export default async function handler(req, res) {
 
         // Open the SQLite database
         const db = await open({
-            filename: '/Users/walter/downloads/HouseSalesSeattle.db', // Update to the correct path on your local server
+            filename: 'c:/Users/walte/Documents/webbdev/labb2tailwind/DATABASEN/HouseSalesSeattle.db',
             driver: sqlite3.Database,
         });
 

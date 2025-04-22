@@ -1,8 +1,9 @@
 import React from 'react';
 
-const Card = ({ data }) => {
+const Card = ({ data, onCardClick }) => {
     return (
-        <div className="flex flex-col md:flex-row border rounded-lg overflow-hidden shadow-md">
+        <div className="flex flex-col md:flex-row border rounded-lg overflow-hidden shadow-md" 
+        onClick={() => onCardClick(data)}>
             <img
                 src={`/256x256/${data.Image}.jpg`} // Corrected path
                 alt={`Price: $${data.SalePrice}`}
