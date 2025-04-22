@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 const HousePage = ({ params }) => {
     const [houseData, setHouseData] = useState(null);
     const [id, setId] = useState(null);
+    const [avgPricePerSqFt, setAvgPricePerSqFt] = useState(null);
 
     useEffect(() => {
         const unwrapParams = async () => {
@@ -31,6 +32,27 @@ const HousePage = ({ params }) => {
             fetchHouseData();
         }
     }, [id]);
+
+    useEffect(() => {
+        if (houseData) {
+            const fetchAvgPricePerSqFt = async () => {
+                try {
+                    const response = await fetch(
+                        `/api/houseCompare?zipcode=${houseData.zip_code}&propertytype=${houseData.PropertyType}`
+                    );
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch average price per SqFt');
+                    }
+                    const data = await response.json();
+                    setAvgPricePerSqFt(data.AvgPricePerSqFt);
+                } catch (error) {
+                    console.error('Error fetching average price per SqFt:', error);
+                }
+            };
+
+            fetchAvgPricePerSqFt();
+        }
+    }, [houseData]);
 
     useEffect(() => {
         if (houseData) {
@@ -114,6 +136,7 @@ const HousePage = ({ params }) => {
                                 <p className="text-gray-600 dark:text-gray-300 text-sm mt-2">Construction Year: {houseData.YrBuilt}</p>
                                 <p className="text-gray-600 dark:text-gray-300 text-sm mt-2">Renovated: {houseData.YrRenovated === 0 ? 'No' : houseData.YrRenovated}</p>
                                 <p className="text-gray-600 dark:text-gray-300 text-sm mt-2">Zip Code: {houseData.zip_code}</p>
+                                <p className="text-gray-600 dark:text-gray-300 text-sm mt-2">Average price per SqFt in zipcode for this property type {avgPricePerSqFt ? `$${avgPricePerSqFt.toFixed(2)}` : 'Loading...'}</p>
                             </div>
                             
                         </div>

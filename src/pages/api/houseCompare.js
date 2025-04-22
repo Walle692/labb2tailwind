@@ -3,7 +3,7 @@ import { open } from 'sqlite';
 
 export default async function handler(req, res) {
     try {
-        const { offset = 0, limit = 20, price, zipcode, sqfoot, sortBy } = req.query;
+        const { zipcode, propertytype } = req.query;
 
         // Open the SQLite database
         const db = await open({
@@ -12,33 +12,21 @@ export default async function handler(req, res) {
         });
 
         // Build the query dynamically based on filters
-        let query = 'SELECT * FROM HouseSalesSeattle WHERE 1=1';
+        let query = 'SELECT AVG(SalePrice / SqFtTotLiving) AS AvgPricePerSqFt FROM HouseSalesSeattle WHERE 1=1';
         const params = [];
 
-        if (price) {
-            query += ' AND SalePrice <= ?';
-            params.push(price);
-        }
         if (zipcode) {
             query += ' AND zip_code = ?';
             params.push(zipcode);
         }
-        if (sqfoot) {
-            query += ' AND SqFtTotLiving >= ?';
-            params.push(sqfoot);
+        if (propertytype) {
+            query += ' AND PropertyType = ?';
+            params.push(propertytype);
         }
 
-        // Add sorting
-        if (sortBy) {
-            query += ` ORDER BY ${sortBy} ASC`;
-        }
-
-        // Add pagination
-        query += ' LIMIT ? OFFSET ?';
-        params.push(parseInt(limit), parseInt(offset));
 
         // Execute the query
-        const rows = await db.all(query, params);
+        const rows = await db.get(query, params);
 
         // Log the query result
         console.log('Database query result:', rows);
