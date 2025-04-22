@@ -3,13 +3,13 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
 const HousePage = ({ params }) => {
-    const { salesID } = params;
+    const { id } = params; // Corrected to use 'id' instead of 'SalesID'
     const [houseData, setHouseData] = useState(null);
 
     useEffect(() => {
         const fetchHouseData = async () => {
             try {
-                const response = await fetch(`/api/housesales/${salesID}`);
+                const response = await fetch(`/api/housesales/${id}`); // Use 'id' in the API call
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
@@ -21,7 +21,7 @@ const HousePage = ({ params }) => {
         };
 
         fetchHouseData();
-    }, [salesID]);
+    }, [id]); // Updated dependency to 'id'
 
     return (
         <div className="p-4">
@@ -29,7 +29,7 @@ const HousePage = ({ params }) => {
                 <div className="border rounded-lg p-4 shadow-md">
                     <h2 className="text-2xl font-bold mb-2">House Details</h2>
                     <img
-                        src={`/256x256/${houseData.Image}.jpg`}
+                        src={`/256x256/${houseData.Image}`}
                         alt={`Price: $${houseData.SalePrice}`}
                         className="w-full h-auto mb-4"
                     />
@@ -42,4 +42,4 @@ const HousePage = ({ params }) => {
             )}
         </div>
     );
-}
+};
