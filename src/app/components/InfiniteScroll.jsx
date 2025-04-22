@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import Card from './Card';
 import SearchBox from './searchbox';
+import Router from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 const InfiniteScroll = () => {
     const [data, setData] = useState([]);
@@ -53,7 +55,7 @@ const InfiniteScroll = () => {
         <div className="p-4 space-y-4">
             <SearchBox onSearch={handleSearch} />
             {data.map((item, index) => (
-                <Card key={index} data={item} />
+                <Card key={index} data={item} onCardClick={handleCardClick} />
             ))}
             <button onClick={loadMore} className="mt-4 p-2 bg-blue-500 text-white">
                 Load More
