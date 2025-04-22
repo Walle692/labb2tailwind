@@ -2,24 +2,34 @@
 import React, { useState, useEffect } from 'react';
 
 const HousePage = ({ params }) => {
-    const { id } = params; // Correctly extract 'id' from params
     const [houseData, setHouseData] = useState(null);
+    const [id, setId] = useState(null);
 
     useEffect(() => {
-        const fetchHouseData = async () => {
-            try {
-                const response = await fetch(`/api/housesales/${id}`); // Fetch house details using 'id'
-                if (!response.ok) {
-                    throw new Error('Failed to fetch house details');
-                }
-                const data = await response.json();
-                setHouseData(data);
-            } catch (error) {
-                console.error('Error fetching house details:', error);
-            }
+        const unwrapParams = async () => {
+            const unwrappedParams = await params;
+            setId(unwrappedParams.id);
         };
+        unwrapParams();
+    }, [params]);
 
-        fetchHouseData();
+    useEffect(() => {
+        if (id) {
+            const fetchHouseData = async () => {
+                try {
+                    const response = await fetch(`/api/housesales/${id}`);
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch house details');
+                    }
+                    const data = await response.json();
+                    setHouseData(data);
+                } catch (error) {
+                    console.error('Error fetching house details:', error);
+                }
+            };
+
+            fetchHouseData();
+        }
     }, [id]);
 
     if (!houseData) {
