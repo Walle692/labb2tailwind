@@ -47,15 +47,12 @@ const InfiniteScroll = () => {
         setOffset(0); // Reset offset for new search
     };
 
-    const handleCardClick = (cardData) => {
-        Router.push(`/listings/${cardData.salesID}`);
-    }
 
     return (
         <div className="p-4 space-y-4">
             <SearchBox onSearch={handleSearch} />
             {data.map((item, index) => (
-                <Card key={index} data={item} onCardClick={handleCardClick} />
+                <Card key={index} data={item} />
             ))}
             <button onClick={loadMore} className="mt-4 p-2 bg-blue-500 text-white">
                 Load More

@@ -5,7 +5,7 @@ const Card = ({ data }) => {
     const router = useRouter(); // Initialize the router
 
     const handleCardClick = () => {
-        router.push(`/listings/${data.salesID}`); 
+        router.push(`/listings/${data.SalesID}`); 
     };
 
     return (

@@ -3,7 +3,7 @@ import { open } from 'sqlite';
 
 export default async function handler(req, res) {
     try {
-        const { salesID } = req.query;
+        const { SalesID } = req.query;
 
         // Open the SQLite database
         const db = await open({
@@ -13,7 +13,7 @@ export default async function handler(req, res) {
 
         // Query to fetch house details by salesID
         const query = 'SELECT * FROM HouseSalesSeattle WHERE salesID = ?';
-        const house = await db.get(query, [salesID]);
+        const house = await db.get(query, [SalesID]);
 
         // Close the database connection
         await db.close();
