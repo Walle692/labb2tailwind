@@ -7,7 +7,7 @@ export default async function handler(req, res) {
 
         // Open the SQLite database
         const db = await open({
-            filename: 'c:/Users/walte/Documents/webbdev/labb2tailwind/DATABASEN/HouseSalesSeattle.db',
+            filename: './DATABASEN/HouseSalesSeattle.db',
             driver: sqlite3.Database,
         });
 
