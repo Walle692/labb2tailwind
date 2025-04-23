@@ -1,4 +1,5 @@
 import Image from "next/image";
+{/*Image is AI generated from https://perchance.org/ai-human-generator */}
 
 export default function About() {
     return (

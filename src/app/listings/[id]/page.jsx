@@ -59,6 +59,7 @@ const HousePage = ({ params }) => {
             const loadGoogleMaps = async () => {
                 try {
                     // Check if the script is already loaded
+                    // REPLACE with your actual Google Maps API key
                     if (!document.querySelector('script[src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5FMhi5ZeDPpQ3ckKqhgt3YyZv8zCJRBg"]')) {
                         const script = document.createElement('script');
                         script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyA5FMhi5ZeDPpQ3ckKqhgt3YyZv8zCJRBg`;

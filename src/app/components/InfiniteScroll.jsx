@@ -2,8 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Card from './Card';
 import SearchBox from './searchbox';
-import Router from 'next/navigation';
-import { useRouter } from 'next/router'; // Correct import for useRouter
+
 
 const InfiniteScroll = () => {
     const [data, setData] = useState([]);

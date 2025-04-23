@@ -1,4 +1,6 @@
 import Image from "next/image";
+{/*SVG files come from https://www.svgrepo.com/ */}
+
 
 export default function Contact() {
     return (
