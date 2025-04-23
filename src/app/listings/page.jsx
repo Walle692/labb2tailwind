@@ -3,7 +3,7 @@ import InfiniteScroll from '../components/InfiniteScroll';
 
 const ListingsPage = () => {
     return (
-        <main className="p-4">
+        <main className="p-4 bg-gray-100">
             <div className="flex justify-center">
                 <div className="w-full md:w-3/4 lg:w-1/2">
                     <div className="flex flex-col items-center mb-4">

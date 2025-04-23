@@ -2,14 +2,14 @@ import Link from "next/link";
 
 export default function Index() {
     return (
-        <div className="relative px-6 lg:px-8 dark:bg-gray-800">
+        <div className="relative px-6 lg:px-8 bg-gray-100">
             <div className="mx-auto max-w-3xl pt-20 pb-32 sm:pt-48 sm:pb-40">
                 <div>
                     <div>
-                        <h1 className="text-4xl font-bold tracking-tight sm:text-center sm:text-6xl dark:text-gray-100">
+                        <h1 className="text-4xl font-bold tracking-tight sm:text-center sm:text-6xl ">
                             House Index
                         </h1>
-                        <p className="mt-6 text-lg leading-8 text-gray-600 sm:text-center dark:text-gray-200">
+                        <p className="mt-6 text-lg leading-8 text-gray-600 sm:text-center ">
                         Welcome to House Index, your ultimate destination for finding the perfect home! 
                         Whether you're searching for a cozy apartment in the city or a spacious family house in the suburbs, 
                         we have a wide range of listings to suit every need and budget. 
