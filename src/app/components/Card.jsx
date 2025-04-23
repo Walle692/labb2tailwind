@@ -13,11 +13,13 @@ const Card = ({ data }) => {
         onClick={handleCardClick}>
             <img
                 src={`/256x256/${data.Image}.jpg`} // Corrected path
-                alt={`Price: $${data.SalePrice}`}
+                alt={`Price: $${data.PropertyType}`}
                 className="w-full md:w-1/3 object-cover"
             />
             <div className="p-4 flex flex-col justify-center">
-                <h2 className="text-xl font-bold mb-2">Price: ${data.SalePrice}</h2>
+                <h1 className="text-xl font-bold mb-2">{data.PropertyType}</h1>
+                <h2 className="text-gray-600">Price: ${data.SalePrice}</h2>
+                <p className="text-gray-600">Bedrooms: {data.Bedrooms}, Bathrooms: {data.Bathrooms}</p>
                 <p className="text-gray-600">Zip Code: {data.zip_code}, SqFt: {data.SqFtTotLiving}</p>
             </div>
         </div>

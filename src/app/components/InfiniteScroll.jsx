@@ -8,7 +8,8 @@ import { useRouter } from 'next/router'; // Correct import for useRouter
 const InfiniteScroll = () => {
     const [data, setData] = useState([]);
     const [offset, setOffset] = useState(0); // Use offset for pagination
-    const [filters, setFilters] = useState({ price: '', zipcode: '', sqfoot: '', sortBy: '' });
+    const [filters, setFilters] = useState({ type: '', bathrooms: '', bedrooms: '', price: '', zipcode: '', sqfoot: '', sortBy: '' });
+    const [hasMore, setHasMore] = useState(true); // State to track if more data is available
     const itemsPerPage = 20; // Number of items to fetch per page
 
     const fetchData = async (offset, filters) => {
@@ -16,6 +17,9 @@ const InfiniteScroll = () => {
             const queryParams = new URLSearchParams({
                 offset, // Use offset for pagination
                 limit: itemsPerPage, // Limit the number of items per request
+                type: filters.type,
+                bedrooms: filters.bedrooms,
+                bathrooms: filters.bathrooms,
                 price: filters.price,
                 zip_code: filters.zipcode,
                 SqFtTotLiving: filters.sqfoot,
@@ -27,6 +31,8 @@ const InfiniteScroll = () => {
 
             if (result.length > 0) {
                 setData((prevData) => [...prevData, ...result]);
+            } else {
+                setHasMore(false);
             }
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -54,9 +60,13 @@ const InfiniteScroll = () => {
             {data.map((item, index) => (
                 <Card key={index} data={item} />
             ))}
-            <button onClick={loadMore} className="mt-4 p-2 bg-blue-500 text-white">
+            {hasMore ? 
+                (
+                <button onClick={loadMore} className="rounded-lg bg-indigo-600 px-4 py-2 text-base font-semibold text-white shadow-sm ring-1 ring-indigo-600 hover:bg-indigo-700 hover:ring-indigo-700">
                 Load More
-            </button>
+                </button>) : (
+                    <p className="text-center text-gray-500">No more listings available.</p>
+                )}
         </div>
     );
 };

@@ -3,7 +3,7 @@ import { open } from 'sqlite';
 
 export default async function handler(req, res) {
     try {
-        const { offset = 0, limit = 20, price, zipcode, sqfoot, sortBy } = req.query;
+        const { offset = 0, limit = 20, type, bathrooms, bedrooms, price, zipcode, sqfoot, sortBy } = req.query;
 
         // Open the SQLite database
         const db = await open({
@@ -15,6 +15,10 @@ export default async function handler(req, res) {
         let query = 'SELECT * FROM HouseSalesSeattle WHERE 1=1';
         const params = [];
 
+        if (type) {
+            query += ' AND PropertyType LIKE ?';
+            params.push(`%${type}%`);
+        }
         if (price) {
             query += ' AND SalePrice <= ?';
             params.push(price);
@@ -27,10 +31,19 @@ export default async function handler(req, res) {
             query += ' AND SqFtTotLiving >= ?';
             params.push(sqfoot);
         }
+        if (bedrooms) {
+            query += ' AND Bedrooms = ?';
+            params.push(bedrooms);
+        }
+        if (bathrooms) {
+            query += ' AND Bathrooms = ?';
+            params.push(bathrooms);
+        }
+
 
         // Add sorting
         if (sortBy) {
-            query += ` ORDER BY ${sortBy} ASC`;
+            query += ` ORDER BY ${sortBy}`;
         }
 
         // Add pagination
